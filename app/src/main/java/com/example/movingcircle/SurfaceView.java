@@ -7,10 +7,12 @@ import android.util.AttributeSet;
 public class SurfaceView extends GLSurfaceView {
 
     private Renderer renderer;
+    private WorldManager worldManager;
+
 
     public SurfaceView(Context context) {
         super(context);
-        this.renderer = new MyRenderer();
+        this.renderer = new MyRenderer(worldManager.getWorldEntities());
         this.setRenderer(this.renderer);
     }
 
