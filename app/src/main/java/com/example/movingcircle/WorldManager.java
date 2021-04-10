@@ -18,12 +18,13 @@ public class WorldManager {
         long currTime;
         boolean gameRunning = true;
 
+        this.circle.applyForce(new float[] {0.01f, 0.01f, 0.0f});
+
         while(gameRunning) {
             currTime = SystemClock.uptimeMillis();
-            if(currTime - prevTime > 100) {
+            if(currTime - prevTime > 10) {
                 prevTime = currTime;
-
-                Log.i("AAAAAA", "worldLoop:");
+                this.circle.update();
             }
         }
     }
