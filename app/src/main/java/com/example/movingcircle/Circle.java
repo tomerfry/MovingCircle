@@ -16,9 +16,10 @@ public class Circle implements ModelInterface {
     private Vector3f pos;
 
     private final String vertexShaderCode =
+            "uniform mat4 uMVPMatrix;" +
             "attribute vec4 vPosition;" +
                     "void main() {" +
-                    "  gl_Position = vPosition;" +
+                    "  gl_Position = uMVPMatrix * vPosition;" +
                     "}";
 
     private final String fragmentShaderCode =
@@ -29,8 +30,10 @@ public class Circle implements ModelInterface {
                     "}";
 
     private int mProgram;
+
     private int posHandle;
     private int colorHandle;
+    private int vPMatrixHandle;
 
     private float[] color;
     private FloatBuffer vertexBuffer;
@@ -87,12 +90,14 @@ public class Circle implements ModelInterface {
     }
 
     @Override
-    public void draw() {
+    public void draw(float[] mvpMatrix) {
         GLES31.glUseProgram(mProgram);
 
         // get handle to vertex shader's vPosition member
-        this.posHandle = GLES31.glGetAttribLocation(mProgram, "vPosition");
+        this.posHandle = GLES31.glGetAttribLocation(this.mProgram, "vPosition");
+        this.vPMatrixHandle = GLES31.glGetUniformLocation(this.mProgram, "uMVPMatrix");
 
+        GLES31.glUniformMatrix4fv(this.vPMatrixHandle, 1, false, mvpMatrix, 0);
         // Enable a handle to the triangle vertices
         GLES31.glEnableVertexAttribArray(this.posHandle);
 
@@ -102,7 +107,7 @@ public class Circle implements ModelInterface {
                 vertexStride, this.vertexBuffer);
 
         // get handle to fragment shader's vColor member
-        colorHandle = GLES31.glGetUniformLocation(mProgram, "vColor");
+        colorHandle = GLES31.glGetUniformLocation(this.mProgram, "vColor");
 
         // Set color for drawing the triangle
         GLES31.glUniform4fv(colorHandle, 1, color, 0);
@@ -113,4 +118,6 @@ public class Circle implements ModelInterface {
         // Disable vertex array
         GLES31.glDisableVertexAttribArray(this.posHandle);
     }
+
+
 }

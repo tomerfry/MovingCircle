@@ -1,6 +1,6 @@
 package com.example.movingcircle;
 
 public interface ModelInterface {
-    public void constructProgram();
-    public void draw();
+    void constructProgram();
+    void draw(float[] mvpMatrix);
 }

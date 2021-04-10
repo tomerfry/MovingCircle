@@ -16,6 +16,14 @@ public class SurfaceView extends GLSurfaceView {
         this.worldManager = new WorldManager();
         this.renderer = new MyRenderer(worldManager.getTriangle(), worldManager.getCircle());
         this.setRenderer(this.renderer);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                worldManager.worldLoop();
+            }
+        }).start();
+
     }
 
     public SurfaceView(Context context, AttributeSet attrs) {
