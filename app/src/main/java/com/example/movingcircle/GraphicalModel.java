@@ -2,6 +2,7 @@ package com.example.movingcircle;
 
 import android.content.res.AssetManager;
 import android.opengl.GLES31;
+import android.opengl.Matrix;
 import android.util.Log;
 
 import java.nio.FloatBuffer;
@@ -22,6 +23,9 @@ public class GraphicalModel {
     private int vPMatrixHandle;
     private int modelPosHandle;
     private int colorHandle;
+    private float[] viewMatrix;
+    private float[] projectionMatrix;
+    private float[] mvpMatrix;
 
     public GraphicalModel(FloatBuffer vertexBuffer,
                           String vertexShaderPath,
@@ -30,16 +34,25 @@ public class GraphicalModel {
                           AssetManager assetManager) {
         this.vertexBuffer = vertexBuffer;
         this.vertexCount = this.vertexBuffer.capacity() / 3;
-        Log.i("BBBBB", String.format("GraphicalModel: %d", this.vertexCount));
         this.shader = new Shader(vertexShaderPath, fragmentShaderPath, assetManager);
         this.color = color;
+
+        this.viewMatrix = new float[16];
+        this.projectionMatrix = new float[16];
+        this.mvpMatrix = new float[16];
+
     }
 
-    public void init() {
+    public void init(float[] projectionMatrix) {
         this.mProgram = this.shader.construct();
+        this.projectionMatrix = projectionMatrix;
     }
 
-    public void draw(float[] mvpMatrix, float[] pos) {
+    public void draw(float[] pos) {
+        Matrix.setLookAtM(this.viewMatrix, 0, 0.0f, 0.0f, -3f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f);
+
+        Matrix.multiplyMM(this.mvpMatrix, 0, this.projectionMatrix, 0, this.viewMatrix, 0);
+
         GLES31.glUseProgram(this.mProgram);
         this.posHandle = GLES31.glGetAttribLocation(this.mProgram, "vPosition");
         this.vPMatrixHandle = GLES31.glGetUniformLocation(this.mProgram, "uMVPMatrix");
@@ -61,5 +74,13 @@ public class GraphicalModel {
         GLES31.glDrawArrays(GLES31.GL_TRIANGLES, 0, this.vertexCount);
 
         GLES31.glDisableVertexAttribArray(this.posHandle);
+    }
+
+    public float[] getViewMatrix() {
+        return viewMatrix;
+    }
+
+    public float[] getProjectionMatrix() {
+        return projectionMatrix;
     }
 }

@@ -1,7 +1,7 @@
 package com.example.movingcircle;
 
 import android.content.res.AssetManager;
-import android.content.res.Resources;
+
 
 public class Circle {
 
@@ -31,12 +31,12 @@ public class Circle {
         this.acceleration = new float[]{0.0f, 0.0f, 0.0f};
     }
 
-    public void initGraphics() {
-        this.model.init();
+    public void initGraphics(float[] projectionMatrix) {
+        this.model.init(projectionMatrix);
     }
 
-    public void draw(float[] mvpMatrix) {
-        this.model.draw(mvpMatrix, this.pos);
+    public void draw() {
+        this.model.draw(this.pos);
     }
 
     public void update() {
@@ -59,4 +59,11 @@ public class Circle {
         this.acceleration[2] += force[2];
     }
 
+    public void followCursor(float x, float y, float width, float height) {
+        float[] ray = CoordsMapper.calculateCursorRay(x, y, width, height, this.model.getProjectionMatrix(), this.model.getViewMatrix());
+
+        this.pos[0] = ray[0];
+        this.pos[1] = ray[1];
+        this.pos[2] = ray[2];
+    }
 }

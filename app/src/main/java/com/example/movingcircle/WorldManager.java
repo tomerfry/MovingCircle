@@ -18,7 +18,6 @@ public class WorldManager {
         long currTime;
         boolean gameRunning = true;
 
-        this.circle.applyForce(new float[] {0.01f, 0.01f, 0.0f});
 
         while(gameRunning) {
             currTime = SystemClock.uptimeMillis();
@@ -31,5 +30,10 @@ public class WorldManager {
 
     public Circle getCircle() {
         return this.circle;
+    }
+
+    public void applyTouch(float x, float y, float displayWidth, float displayHeight) {
+        Log.i("AAAAA", String.format("applyTouch: %f, %f", x, y));
+        this.circle.followCursor(x, y, displayWidth, displayHeight);
     }
 }
