@@ -23,6 +23,7 @@ public class SurfaceView extends GLSurfaceView {
                     return false;
 
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    gameEngine.onTouch(event.getX(), event.getY());
                     return true;
                 }
                 return false;

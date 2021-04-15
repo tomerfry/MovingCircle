@@ -1,6 +1,9 @@
-uniform mat4 uMVPMatrix;
-uniform mat4 translationMatrix;
-attribute vec4 vPosition;
+attribute vec4 position;
+
+uniform mat4 transformationMatrix;
+uniform mat4 projectionMatrix;
+uniform mat4 viewMatrix;
+
 void main() {
-  gl_Position = uMVPMatrix * translationMatrix * vPosition;
+  gl_Position = projectionMatrix * viewMatrix * transformationMatrix * position;
 }

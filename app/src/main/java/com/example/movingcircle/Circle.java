@@ -52,4 +52,8 @@ public class Circle {
         this.acceleration[1] += force[1];
         this.acceleration[2] += force[2];
     }
+
+    public void setPos(float[] newPos) {
+        this.pos = newPos;
+    }
 }

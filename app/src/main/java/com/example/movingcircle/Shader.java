@@ -53,23 +53,23 @@ public class Shader {
         return shader;
     }
 
-    public int getProgramHandle() {
-        return programHandle;
-    }
-
-    public int getPosAttribHandle() {
-        return GLES31.glGetAttribLocation(this.programHandle, "vPosition");
+    public int getPosHandle() {
+        return GLES31.glGetAttribLocation(this.programHandle, "position");
     }
 
     public int getColorUniformHandle() {
         return GLES31.glGetUniformLocation(this.programHandle, "vColor");
     }
 
-    public int getMVPMatrixUniformMatrix() {
-        return GLES31.glGetUniformLocation(this.programHandle, "uMVPMatrix");
+    public int getProjectionMatrix() {
+        return GLES31.glGetUniformLocation(this.programHandle, "projectionMatrix");
     }
 
-    public int getTranslationMatrixUnfirom() {
-        return GLES31.glGetUniformLocation(this.programHandle, "translationMatrix");
+    public int getTransformationMatrixUnfirom() {
+        return GLES31.glGetUniformLocation(this.programHandle, "transformationMatrix");
+    }
+
+    public int getViewMatrixUniform() {
+        return GLES31.glGetUniformLocation(this.programHandle, "viewMatrix");
     }
 }

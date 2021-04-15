@@ -28,7 +28,7 @@ public class CoordsMapper {
         Matrix.invertM(invertedProjection, 0, projectionMatrix, 0);
         float[] eyeCoords = new float[4];
         Matrix.multiplyMV(eyeCoords, 0, invertedProjection, 0, clipCoords, 0);
-        return new float[]{eyeCoords[0], eyeCoords[1], -1f, 0.0f};
+        return new float[]{eyeCoords[0], eyeCoords[1], 0.0f, 0.0f};
     }
 
     private static float[] getNormalizedDeviceCoords(float cursorX, float cursorY, float displayWidth, float displayHeight) {

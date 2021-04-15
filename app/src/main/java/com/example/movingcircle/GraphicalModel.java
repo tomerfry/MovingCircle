@@ -16,6 +16,7 @@ public class GraphicalModel {
     private Shader shader;
 
     private float[] translationMatrix;
+    private float[] identityMatrix;
 
     public GraphicalModel(FloatBuffer vertexBuffer,
                           String vertexShaderPath,
@@ -27,6 +28,7 @@ public class GraphicalModel {
         this.shader = new Shader(vertexShaderPath, fragmentShaderPath, assetManager);
         this.color = color;
         this.translationMatrix = new float[16];
+        this.identityMatrix = new float[16];
     }
 
     public FloatBuffer getVertexBuffer() {
@@ -46,10 +48,8 @@ public class GraphicalModel {
     }
 
     public void repositionInSpace(float x, float y, float z) {
-        Matrix.setIdentityM(this.translationMatrix, 0);
-        this.translationMatrix[12] = x;
-        this.translationMatrix[13] = y;
-        this.translationMatrix[14] = z;
+        Matrix.setIdentityM(this.identityMatrix, 0);
+        Matrix.translateM(this.translationMatrix, 0, this.identityMatrix, 0, x, y, z);
     }
 
     public float[] getTranslationMatrix() {

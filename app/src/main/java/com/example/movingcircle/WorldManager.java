@@ -30,4 +30,8 @@ public class WorldManager {
     public Circle getCircle() {
         return circle;
     }
+
+    public void applyTouch(float[] cursorPos) {
+        this.circle.setPos(cursorPos);
+    }
 }
