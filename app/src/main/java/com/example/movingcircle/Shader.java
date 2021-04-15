@@ -6,9 +6,13 @@ import android.opengl.GLES31;
 
 public class Shader {
 
+    private int vertexShaderHandle;
+    private int fragmentShaderHandle;
     private String vertexShaderPath;
     private String fragmentShaderPath;
     private AssetManager assetManager;
+
+    private int programHandle;
 
     public Shader(String vertexShaderPath, String fragmentShaderPath, AssetManager assetManager) {
         this.vertexShaderPath = vertexShaderPath;
@@ -16,20 +20,30 @@ public class Shader {
         this.assetManager = assetManager;
     }
 
-    public int construct() {
+    public void construct() {
         String vertexShader, fragmentShader;
         vertexShader = AssetsTools.readAsset(vertexShaderPath, assetManager);
         fragmentShader = AssetsTools.readAsset(fragmentShaderPath, assetManager);
-        int shaderHandle;
+        this.vertexShaderHandle = loadShader(GLES31.GL_VERTEX_SHADER, vertexShader);
+        this.fragmentShaderHandle = loadShader(GLES31.GL_FRAGMENT_SHADER, fragmentShader);
+        this.programHandle = GLES31.glCreateProgram();
+        GLES31.glAttachShader(this.programHandle, vertexShaderHandle);
+        GLES31.glAttachShader(this.programHandle, fragmentShaderHandle);
+        GLES31.glLinkProgram(this.programHandle);
+    }
 
-        int vertexShaderHandle = loadShader(GLES31.GL_VERTEX_SHADER, vertexShader);
-        int fragmentShaderHandle = loadShader(GLES31.GL_FRAGMENT_SHADER, fragmentShader);
-        shaderHandle = GLES31.glCreateProgram();
-        GLES31.glAttachShader(shaderHandle, vertexShaderHandle);
-        GLES31.glAttachShader(shaderHandle, fragmentShaderHandle);
-        GLES31.glLinkProgram(shaderHandle);
+    public void start() {
+        GLES31.glUseProgram(this.programHandle);
+    }
 
-        return shaderHandle;
+    public void stop() {
+        GLES31.glUseProgram(0);
+    }
+
+    public void cleanup() {
+        this.stop();
+        GLES31.glDetachShader(this.programHandle, this.vertexShaderHandle);
+        GLES31.glDetachShader(this.programHandle, this.fragmentShaderHandle);
     }
 
     private static int loadShader(int type, String shaderCode) {
@@ -37,5 +51,25 @@ public class Shader {
         GLES31.glShaderSource(shader, shaderCode);
         GLES31.glCompileShader(shader);
         return shader;
+    }
+
+    public int getProgramHandle() {
+        return programHandle;
+    }
+
+    public int getPosAttribHandle() {
+        return GLES31.glGetAttribLocation(this.programHandle, "vPosition");
+    }
+
+    public int getColorUniformHandle() {
+        return GLES31.glGetUniformLocation(this.programHandle, "vColor");
+    }
+
+    public int getMVPMatrixUniformMatrix() {
+        return GLES31.glGetUniformLocation(this.programHandle, "uMVPMatrix");
+    }
+
+    public int getTranslationMatrixUnfirom() {
+        return GLES31.glGetUniformLocation(this.programHandle, "translationMatrix");
     }
 }

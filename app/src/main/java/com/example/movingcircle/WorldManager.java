@@ -7,10 +7,8 @@ import android.util.Log;
 public class WorldManager {
     private Circle circle;
 
-    static final float[] circleColor = { 0.63671875f, 0.76953125f, 0.22265625f, 1.0f };
-
     public WorldManager(AssetManager assetManager) {
-        this.circle = new Circle(0.0f, 0.0f, 0.0f, 0.1f, circleColor, assetManager);
+        this.circle = new Circle(0.0f, 0.0f, 0.0f, 0.1f, assetManager);
     }
 
     public void worldLoop() {
@@ -18,6 +16,7 @@ public class WorldManager {
         long currTime;
         boolean gameRunning = true;
 
+        this.circle.applyForce(new float[]{0.01f, 0.0f, 0.0f});
 
         while(gameRunning) {
             currTime = SystemClock.uptimeMillis();
@@ -29,11 +28,6 @@ public class WorldManager {
     }
 
     public Circle getCircle() {
-        return this.circle;
-    }
-
-    public void applyTouch(float x, float y, float displayWidth, float displayHeight) {
-        Log.i("AAAAA", String.format("applyTouch: %f, %f", x, y));
-        this.circle.followCursor(x, y, displayWidth, displayHeight);
+        return circle;
     }
 }

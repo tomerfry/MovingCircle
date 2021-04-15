@@ -5,7 +5,7 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 
-public class ShapesTools {
+public class ShapesTool {
 
     public static FloatBuffer getCircleCoords(float[] pos, float radius, int circleResolution) {
         float prevX = pos[0], prevY = pos[1] - radius;

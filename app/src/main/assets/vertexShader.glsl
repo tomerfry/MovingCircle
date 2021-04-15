@@ -1,6 +1,6 @@
 uniform mat4 uMVPMatrix;
-uniform vec4 modelPos;
+uniform mat4 translationMatrix;
 attribute vec4 vPosition;
 void main() {
-  gl_Position = uMVPMatrix * (vPosition + modelPos);
+  gl_Position = uMVPMatrix * translationMatrix * vPosition;
 }
