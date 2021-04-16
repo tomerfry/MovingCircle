@@ -31,8 +31,7 @@ public class WorldManager {
     }
 
     public void applyTouch(float[] cursorPos) {
-//        this.circle.follow(cursorPos);
-        this.circle.setPos(cursorPos);
+        this.circle.follow(cursorPos);
     }
 
     public void setBounds(float leftX, float rightX, float topY, float bottomY) {

@@ -19,14 +19,18 @@ public class SurfaceView extends GLSurfaceView {
         setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (event == null)
-                    return false;
-
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    gameEngine.onTouch(event.getX(), event.getY());
-                    return true;
+                float x = event.getX();
+                float y = event.getY();
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        gameEngine.onTouch(x, y);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        break;
+                    default:
+                        break;
                 }
-                return false;
+                return true;
             }
         });
     }

@@ -68,9 +68,10 @@ public class Circle {
     }
 
     public void follow(float[] force) {
-        this.acceleration[0] = (force[0] - this.acceleration[0]) / 10;
-        this.acceleration[1] = (force[1] - this.acceleration[1]) / 10;
-        this.acceleration[2] = (force[2] - this.acceleration[2]) / 10;
+        float len = Matrix.length((force[0] - this.pos[0]), (force[1] - this.pos[1]), (force[2] - this.pos[2]));
+        this.acceleration[0] = (force[0] - this.pos[0]) / (len * 100);
+        this.acceleration[1] = (force[1] - this.pos[1]) / (len * 100);
+        this.acceleration[2] = (force[2] - this.pos[2]) / (len * 100);
     }
 
     public void setPos(float[] newPos) {
