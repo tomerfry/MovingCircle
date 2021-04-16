@@ -2,7 +2,6 @@ package com.example.movingcircle;
 
 import android.content.res.AssetManager;
 import android.os.SystemClock;
-import android.util.Log;
 
 public class WorldManager {
     private Circle circle;
@@ -16,7 +15,7 @@ public class WorldManager {
         long currTime;
         boolean gameRunning = true;
 
-        this.circle.applyForce(new float[]{0.01f, 0.0f, 0.0f});
+        this.circle.applyForce(new float[]{0.01f, 0.01f, 0.0f});
 
         while(gameRunning) {
             currTime = SystemClock.uptimeMillis();
@@ -32,6 +31,11 @@ public class WorldManager {
     }
 
     public void applyTouch(float[] cursorPos) {
+//        this.circle.follow(cursorPos);
         this.circle.setPos(cursorPos);
+    }
+
+    public void setBounds(float leftX, float rightX, float topY, float bottomY) {
+        this.circle.setBounds(leftX, rightX, topY, bottomY);
     }
 }

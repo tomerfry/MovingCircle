@@ -8,7 +8,7 @@ public class CoordsMapper {
         float[] clipCoords = new float[] {
                 normalizedCoords[0],
                 normalizedCoords[1],
-                -1f,
+                -3f,
                 1f
         };
         float[] eyeCoords = toEyeCoords(clipCoords, projectionMatrix);

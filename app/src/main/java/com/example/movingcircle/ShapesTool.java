@@ -21,14 +21,17 @@ public class ShapesTool {
             circleCoords.add(prevX);
             circleCoords.add(prevY);
             circleCoords.add(pos[2]);
+            circleCoords.add(1.0f);
 
             circleCoords.add(newX);
             circleCoords.add(newY);
             circleCoords.add(pos[2]);
+            circleCoords.add(1.0f);
 
             circleCoords.add(pos[0]);
             circleCoords.add(pos[1]);
             circleCoords.add(pos[2]);
+            circleCoords.add(1.0f);
 
             prevX = newX;
             prevY = newY;

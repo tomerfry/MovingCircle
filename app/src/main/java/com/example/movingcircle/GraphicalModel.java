@@ -24,7 +24,7 @@ public class GraphicalModel {
                           float[] color,
                           AssetManager assetManager) {
         this.vertexBuffer = vertexBuffer;
-        this.vertexCount = this.vertexBuffer.capacity() / 3;
+        this.vertexCount = this.vertexBuffer.capacity() / 4;
         this.shader = new Shader(vertexShaderPath, fragmentShaderPath, assetManager);
         this.color = color;
         this.translationMatrix = new float[16];
