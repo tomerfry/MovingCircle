@@ -45,13 +45,13 @@ public class Circle {
         this.acceleration[1] = 0.0f;
         this.acceleration[2] = 0.0f;
 
-        if(this.pos[0] <= this.leftX)
+        if(this.pos[0] + this.radius <= this.leftX)
             this.velocity[0] = -this.velocity[0];
-        if(this.pos[0] >= this.rightX)
+        if(this.pos[0] - this.radius >= this.rightX)
             this.velocity[0] = -this.velocity[0];
-        if(this.pos[1] <= this.topY)
+        if(this.pos[1] - this.radius <= this.topY)
             this.velocity[1] = -this.velocity[1];
-        if(this.pos[1] >= this.bottomY)
+        if(this.pos[1] + this.radius >= this.bottomY)
             this.velocity[1] = -this.velocity[1];
 
         this.pos[0] += this.velocity[0];
